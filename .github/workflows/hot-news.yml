@@ -21,12 +21,7 @@ jobs:
       - name: Install dependencies
         run: |
           pip install --upgrade pip
-          pip install \
-            feedparser \          # 解析 RSS
-            beautifulsoup4 \      # 解析 HTML（用于百度热搜等）
-            lxml \                # RSS 解析加速
-            dashscope \           # 调用 Qwen3-Max
-            requests              # HTTP 请求
+          pip install feedparser beautifulsoup4 lxml dashscope requests
 
       - name: Run hot news fetcher
         run: python digest.py   # ← 替换为你的主脚本名（如 main.py）
