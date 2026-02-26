@@ -5,7 +5,7 @@
 # 抓取与去重设置
 # ================
 fetch:
-  max_items_total: 30          # 初始抓取30条（AI去重后≈20条）
+  max_items_total: 12          # 初始抓取30条（AI去重后≈20条）
   min_content_length: 70       # 过滤短内容（如“RT this!”）
   dedup_similarity_threshold: 0.82  # 语义去重阈值（0~1，越高越严格）
 
