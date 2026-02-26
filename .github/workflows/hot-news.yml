@@ -24,12 +24,14 @@ jobs:
           pip install feedparser beautifulsoup4 lxml dashscope requests pyyaml
 
       - name: Run hot news fetcher
-        run: python digest.py   # ← 替换为你的主脚本名（如 main.py）
+        run: python digest.py
         env:
           DASHSCOPE_API_KEY: ${{ secrets.DASHSCOPE_API_KEY }}
 
       - name: AI analyze with Qwen3-Max
         run: python scripts/ai_summarize.py
+        env:
+          DASHSCOPE_API_KEY: ${{ secrets.DASHSCOPE_API_KEY }}   # ← 关键！
 
       - name: Send email report
         run: python scripts/send_email.py
