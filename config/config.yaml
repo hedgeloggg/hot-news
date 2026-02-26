@@ -1,0 +1,102 @@
+# config/config.yaml
+# 全球 + 中国社交热点日报 · 稳定生产环境配置 · 2026年2月
+
+# ================
+# 抓取与去重设置
+# ================
+fetch:
+  max_items_total: 30          # 初始抓取30条（AI去重后≈20条）
+  min_content_length: 70       # 过滤短内容（如“RT this!”）
+  dedup_similarity_threshold: 0.82  # 语义去重阈值（0~1，越高越严格）
+
+# ================
+# 信源列表（仅保留稳定可用源）
+# ================
+sources:
+  # 🔥 全球实时趋势
+  - name: "X Global Trends"
+    url: "https://nitter.net/i/trends/rss"
+    type: rss
+    headers:
+      User-Agent: "Mozilla/5.0 (compatible; TrendRadar/1.0)"
+
+  - name: "X US Trends"
+    url: "https://nitter.privacydev.net/i/trends/rss"
+    type: rss
+    headers:
+      User-Agent: "Mozilla/5.0 (compatible; TrendRadar/1.0)"
+
+  # 🌍 Reddit 全领域热门（24小时）
+  - name: "Reddit r/popular"
+    url: "https://www.reddit.com/r/popular/hot.rss?t=day"
+    type: rss
+
+  - name: "Reddit r/news"
+    url: "https://www.reddit.com/r/news/hot.rss?t=day"
+    type: rss
+
+  - name: "Reddit r/worldnews"
+    url: "https://www.reddit.com/r/worldnews/hot.rss?t=day"
+    type: rss
+
+  - name: "Reddit r/funny"
+    url: "https://www.reddit.com/r/funny/hot.rss?t=day"
+    type: rss
+
+  - name: "Reddit r/politics"
+    url: "https://www.reddit.com/r/politics/hot.rss?t=day"
+    type: rss
+
+  - name: "Reddit r/technology"
+    url: "https://www.reddit.com/r/technology/hot.rss?t=day"
+    type: rss
+
+  # 💡 Hacker News 高质量讨论
+  - name: "Hacker News Top"
+    url: "https://hnrss.org/frontpage?points=80"
+    type: rss
+
+  # ======================
+  # 🇨🇳 中文热点（精选稳定源）
+  # ======================
+
+  # ✅ 微博热搜（高稳定性）
+  - name: "微博热搜榜"
+    url: "https://weiborss.com/api/hotsearch/rss"
+    type: rss
+
+  # ✅ 知乎热榜（高质量问答）
+  - name: "知乎热榜"
+    url: "https://rss.zhangshu.info/zhihu/hotlist"
+    type: rss
+
+  # ⚠️ 百度热搜（通过 TopHub，若失效可注释）
+  - name: "百度热搜"
+    url: "https://tophub.today/n/KqndgxeLl9"
+    type: html
+    selector: "td a"  # 提取表格中的链接文本
+
+# ================
+# 内容过滤（全领域模式）
+# ================
+filter:
+  black_keywords:
+    - "giveaway"
+    - "free"
+    - "follow"
+    - "like"
+    - "subscribe"
+    - "招聘"
+    - "广告"
+    - "点击领取"
+    - "转发抽奖"
+    - "教程"
+    - "免费领"
+    - "私信我"
+
+# ================
+# 输出路径
+# ================
+output:
+  raw_news_path: "output/raw_news.json"
+  final_report_path: "output/final_report.txt"
