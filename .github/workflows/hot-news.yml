@@ -21,7 +21,7 @@ jobs:
       - name: Install dependencies
         run: |
           pip install --upgrade pip
-          pip install feedparser beautifulsoup4 lxml dashscope requests
+          pip install feedparser beautifulsoup4 lxml dashscope requests pyyaml
 
       - name: Run hot news fetcher
         run: python digest.py   # ← 替换为你的主脚本名（如 main.py）
