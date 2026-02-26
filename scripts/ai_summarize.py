@@ -41,8 +41,9 @@ def main():
             report += analysis + "\n────────────────\n\n"
             time.sleep(1)  # 避免 API 限流
         except Exception as e:
-            print(f"AI Error: {e}")
-            report += f"【热度排名】#{i}\n【事件标题】{item['title']}\n【分析失败】\n\n"
+            error_msg = f"【AI分析失败】{str(e)[:200]}"  # 截断长错误
+            print(f"AI ERROR for item {i}: {error_msg}")
+            report += f"【热度排名】#{i}\n【事件标题】{item['title']}\n{error_msg}\n\n"
     
     with open('output/final_report.txt', 'w') as f:
         f.write(report)
